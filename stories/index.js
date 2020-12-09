@@ -13,6 +13,11 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
+
 
 storiesOf("Button", module)
   .addParameters({
@@ -113,6 +118,8 @@ storiesOf("Button", module)
         { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
       ];
       
+
+      
       storiesOf("InterviewerList", module)
         .addParameters({
           backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -138,4 +145,9 @@ storiesOf("Button", module)
         .add("Appointment", () => <Appointment />)
         .add("Appointment with Time", () => <Appointment time="12pm" />)
         .add("Header", () => <Header time="12pm" />)
-        .add("Empty", () => <Empty onAdd={action("onAdd")} />);
+        .add("Empty", () => <Empty onAdd={action("onAdd")} />)
+        .add("Show", () => <Show student='lilia' interviewer= {interviewer} onEdit={action("onEdit")} onDelete={action("onDelete")}/>)
+        .add("Confirm", () => <Confirm message="test" onConfirm={action("onConfirm")} onCancel={action("onCancel")} />)
+        .add("Status", () => <Status message="Status"  />)
+        .add("Error", () => <Error message="Error" onClose={action("onClose")} />)
+        ;
