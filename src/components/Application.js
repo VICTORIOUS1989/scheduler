@@ -2,7 +2,7 @@ import React, { Fragment, useState , useEffect} from "react";
 import axios from 'axios';
 import DayList from './DayList'
 import Appointment from "components/Appointment/index";
-import { getAppointmentsForDay } from 'helpers/selectors';
+import { getAppointmentsForDay ,getInterview} from 'helpers/selectors';
 
 import "components/Application.scss";
 
@@ -16,7 +16,8 @@ export default function Application(props) {
     day: "",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: {}
+    appointments: {},
+    interviewers :{}
   });
   
       useEffect(() => {
@@ -26,17 +27,23 @@ export default function Application(props) {
         axios.get(`/api/appointments`).then((res) => res.data),
         axios.get(`/api/interviewers`).then((res) => res.data)
       ]).then((all) => {
-        setState(prev => ({...prev, days: all[0], appointments: all[1], third: all[2] }));
+        setState(prev => ({...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
       })
     }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-
-
   const schedule = dailyAppointments.map(appointment => {
-        return (
-          <Appointment key={appointment.id} {...appointment} />
-        );});
+  const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
+    );
+  });
       
   return (
     <main className="layout">
