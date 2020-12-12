@@ -11,6 +11,23 @@ let interviewers= {
   }
 }
 
+export function getInterviewersForDay(state, day) {
+
+  let interviewersArr = [];
+	const [interviewersObj] = state.days.filter((data) => data.name === day);
+	if (!interviewersObj) {
+		return [];
+	} else {
+		const interviewers = interviewersObj.interviewers.filter(
+			(id) => id === state.interviewers[id].id
+		);
+		interviewers.forEach((interviewerId) =>
+    interviewersArr.push(state.interviewers[interviewerId])
+		);
+		return interviewersArr;
+	}
+}
+
 export function getAppointmentsForDay(state, day) {
   let appointmentsForDay = [];
 	const [appointmentObj] = state.days.filter((data) => data.name === day);
