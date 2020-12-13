@@ -20,7 +20,36 @@ export default function Application(props) {
     interviewers :{}
   });
   
-      useEffect(() => {
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+  //    const interviewer = getInterview(state, interview);
+
+   return axios
+      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then( () => {
+        setState({
+          ...state,
+          appointments
+        });
+   //      return interviewer;
+      })
+      .catch( () => {
+        console.log('ERROR')
+      })
+
+  
+
+    }
+
+    useEffect(() => {
 
       Promise.all([
         axios.get(`/api/days`).then((res) => res.data),
@@ -32,22 +61,40 @@ export default function Application(props) {
     }, [])
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const interviewers = getInterviewersForDay(state, state.day);
 
   const schedule = dailyAppointments.map(appointment => {
   const interview = getInterview(state, appointment.interview);
+  const interviewers = getInterviewersForDay(state, state.day)
 
+  if(interview){
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interview}
+        interview={interview.interviewer}
+        student={interview.student}
         interviewers={interviewers}
-
+        bookInterview={bookInterview}
+  
+      />
+    );  
+  }
+  else{
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={null}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
-  });
+  }
+
+});
+    
       
   return (
     <main className="layout">

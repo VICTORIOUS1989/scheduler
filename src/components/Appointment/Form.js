@@ -16,6 +16,12 @@ export default function Confirm(props) {
     onCancel();
   }
 
+  function validate() {
+    if (formName === "") {
+      return;
+    }
+    onSave(formName, formInterviewer);
+  }
   return (  
       <main className="appointment__card appointment__card--create">
         <section className="appointment__card-left">
@@ -32,12 +38,12 @@ export default function Confirm(props) {
               */
             />
           </form>
-          <InterviewerList interviewers={interviewers} value={formInterviewer}  onChange={setInterviewer}/>
+          <InterviewerList interviewers={interviewers} value={formInterviewer}  onChange={setInterviewer} />
         </section>
         <section className="appointment__card-right">
           <section className="appointment__actions">
             <Button onClick={event => cancel()} danger>Cancel</Button>
-            <Button onClick={onSave} confirm>Save</Button>
+            <Button onClick={event => validate()} confirm>Save</Button>
           </section>
         </section>
       </main> 
