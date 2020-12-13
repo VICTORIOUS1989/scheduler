@@ -44,10 +44,33 @@ export default function Application(props) {
       .catch( () => {
         console.log('ERROR')
       })
-
-  
-
     }
+
+
+    const cancelInterview = (appointmentId) => {
+      const prev = {  ...state }
+      const appointment = {
+        ...state.appointments[appointmentId], 
+        interview: null
+      };  
+      const appointments = {
+        ...state.appointments,
+        [appointmentId]: appointment
+      };
+  
+      return axios
+        .delete(`http://localhost:8001/api/appointments/${appointmentId}`)
+        .then( () => {
+          setState({
+            ...state,
+            appointments
+          });
+        })
+        .catch( () => {
+          setState({...prev})
+        })
+    } 
+
 
     useEffect(() => {
 
@@ -76,6 +99,8 @@ export default function Application(props) {
         student={interview.student}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+
   
       />
     );  
@@ -89,6 +114,8 @@ export default function Application(props) {
         interview={null}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+
       />
     );
   }

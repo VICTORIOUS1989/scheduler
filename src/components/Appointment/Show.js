@@ -24,7 +24,7 @@ const {student,interviewer,onEdit,onDelete}= props;
                 className="appointment__actions-button"
                 src="images/trash.png"
                 alt="Delete"
-                onClick={onDelete}
+                onClick={props.onDelete}
 
               />
             </section>
