@@ -2,7 +2,7 @@ import React, { useState} from "react";
 
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
-  const [history, setHistory] = useState([initial]); // This line is new!
+  const [history, setHistory] = useState([initial]); 
 
   const transition = function(newMode,replace=false ) {
     if (!replace){
@@ -24,5 +24,4 @@ export default function useVisualMode(initial) {
 
   return { mode ,transition, back };
 }
-
 
