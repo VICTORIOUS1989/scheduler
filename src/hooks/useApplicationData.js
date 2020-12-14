@@ -38,13 +38,22 @@ export default function useApplicationData() {
       [id]: appointment
     };
   //    const interviewer = getInterview(state, interview);
-
+     // Decrement spots
+     const days = [...state.days];
+     for (let dayIndex in days) {
+       let day = days[dayIndex];
+       if (day.appointments.includes(id)) {
+         const newDay = { ...day, spots: day.spots - 1 };
+         days[dayIndex] = newDay;
+       }
+     }
    return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then( () => {
         setState({
           ...state,
-          appointments
+          appointments,
+          days
         });
    //      return interviewer;
       })
@@ -64,13 +73,23 @@ export default function useApplicationData() {
         ...state.appointments,
         [appointmentId]: appointment
       };
-  
+      
+   // Increment spots
+   const days = [...state.days];
+   for (let dayIndex in days) {
+     let day = days[dayIndex];
+     if (day.appointments.includes(appointmentId)) {
+       const newDay = { ...day, spots: day.spots + 1 };
+       days[dayIndex] = newDay;
+     }
+   }
       return axios
         .delete(`http://localhost:8001/api/appointments/${appointmentId}`)
         .then( () => {
           setState({
             ...state,
-            appointments
+            appointments,
+            days
           });
         })
         .catch( () => {
