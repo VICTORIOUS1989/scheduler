@@ -26,6 +26,7 @@ export default function Confirm(props) {
       setError("Please select an interviewer");
       return;
     }*/
+    setError("");
     onSave(formName, formInterviewer);
   }
   return (  
