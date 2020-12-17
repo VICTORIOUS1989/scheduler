@@ -17,13 +17,20 @@ export default function useApplicationData() {
 
   const setDays = (days) => { setState(prev => ({ ...prev, days }));};
   useEffect(() => {
-
     Promise.all([
-      axios.get(`/api/days`).then((res) => res.data),
-      axios.get(`/api/appointments`).then((res) => res.data),
-      axios.get(`/api/interviewers`).then((res) => res.data)
+      axios.get(`/api/days`),
+      axios.get(`/api/appointments`),
+      axios.get(`/api/interviewers`)
     ]).then((all) => {
-      setState(prev => ({...prev, days: all[0], appointments: all[1], interviewers: all[2] }));
+      const days=all[0].data;
+      const appointments=all[1].data;
+      const interviewers=all[2].data;
+
+
+      setState(prev => {
+           return {...prev, days ,appointments, interviewers };
+      });
+
     })
   }, []);
 
