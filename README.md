@@ -4,9 +4,9 @@
 
 !["Create an appointment"](images/1.png)
 
-!["Saving appointment"](2.png)
+!["Saving appointment"](images/2.png)
 
-!["Created appointment"](4.png)
+!["Created appointment"](images/4.png)
 ## Setup
 
 Install dependencies with `npm install`.
