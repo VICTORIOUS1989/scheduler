@@ -16,12 +16,10 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
-
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     const interviewers = getInterviewersForDay(state, state.day)
-
     if(interview){
       return (
         <Appointment
@@ -53,7 +51,6 @@ export default function Application(props) {
     }
 });
     
-   
   return (
     <main className="layout">
       <section className="sidebar">

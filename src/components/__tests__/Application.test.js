@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, cleanup ,waitForElement,prettyDOM,getAllByTestId,fireEvent,getByText} from "@testing-library/react";
+import { render, cleanup ,getByTestId,queryByAltText,queryByText,waitForElement,prettyDOM,getAllByTestId,fireEvent,getByText,getByAltText,getByPlaceholderText} from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -32,7 +32,7 @@ it("loads data, books an interview and reduces the spots remaining for Monday by
   fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
   fireEvent.click(getByText(appointment, "Save"));
 
-  expect(getByText(appointment, "Saving")).toBeInTheDocument();
+  expect(getByText(appointment, "SAVING")).toBeInTheDocument();
 
   await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
@@ -65,7 +65,7 @@ it("loads data, cancels an interview and increases the spots remaining for Monda
   fireEvent.click(queryByText(appointment, "Confirm"));
 
   // 6. Check that the element with the text "Deleting" is displayed.
-  expect(getByText(appointment, "Deleting")).toBeInTheDocument();
+  expect(getByText(appointment, "Deleting...")).toBeInTheDocument();
 
   // 7. Wait until the element with the "Add" button is displayed.
   await waitForElement(() => getByAltText(appointment, "Add"));
@@ -96,7 +96,7 @@ it("loads data, edits an interview and keeps the spots remaining for Monday the 
   
   fireEvent.click(getByText(appointment, "Save"));
 
-  expect(getByText(appointment, "Saving...")).toBeInTheDocument();
+  expect(getByText(appointment, "SAVING")).toBeInTheDocument();
 
   await waitForElement(() => getByText(appointment, "My New Student"));
 
@@ -104,6 +104,6 @@ it("loads data, edits an interview and keeps the spots remaining for Monday the 
     queryByText(day, "Monday")
   );
 
-  expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+  expect(getByText(day, "no spots remaining")).toBeInTheDocument();
 
 });

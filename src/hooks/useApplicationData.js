@@ -5,7 +5,7 @@ import axios from "axios";
 export default function useApplicationData() {
 
   const [state, setState] = useState({
-    day: "",
+    day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
@@ -25,8 +25,6 @@ export default function useApplicationData() {
       const days=all[0].data;
       const appointments=all[1].data;
       const interviewers=all[2].data;
-
-
       setState(prev => {
            return {...prev, days ,appointments, interviewers };
       });
