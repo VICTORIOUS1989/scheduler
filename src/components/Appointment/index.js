@@ -21,7 +21,7 @@ export default function Appointment(props) {
   const ERROR_DELETE = "ERROR_DELETE";
   const DELETING = "DELETING";
 
-  const {student,time,interview,interviewers,cancelInterview,bookInterview}= props
+  const {student,time,interview,interviewers,cancelInterview,bookInterview,editInterview}= props
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -50,6 +50,18 @@ export default function Appointment(props) {
      .catch(error => transition(ERROR_DELETE, true));
 
   }
+
+  const onEdit = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+
+    transition("SAVING");
+    editInterview(props.id, interview)
+      .then(() => transition("SHOW"))
+      .catch((error) => transition("ERROR_SAVE", true));
+  };
 
   return (   
     <article  className="appointment" data-testid="appointment" >
@@ -82,7 +94,7 @@ export default function Appointment(props) {
         interviewer={interview.id}
         interviewers={interviewers}
          onCancel={back} 
-         onSave={save} />} 
+         onSave={onEdit} />} 
         {mode === DELETING && <Status message="Deleting..." />}
 
 

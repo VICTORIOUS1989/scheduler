@@ -65,8 +65,32 @@ export default function useApplicationData() {
       .catch( () => {
         console.log('ERROR')
       })
-    }
+    };
 
+
+    function editInterview  (id, interview) {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview },
+      };
+  
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment,
+      };
+      return axios
+      .put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then( () => {
+        setState({
+          ...state,
+          appointments,
+        });
+      })
+      .catch( () => {
+        console.log('ERROR')
+      })
+    };
+    
 
     const cancelInterview = (appointmentId) => {
       const prev = {  ...state }
@@ -107,5 +131,6 @@ export default function useApplicationData() {
       setDay,
       bookInterview,
       cancelInterview,
+      editInterview,
     };
   }
