@@ -62,9 +62,7 @@ export default function useApplicationData() {
         });
    //      return interviewer;
       })
-      .catch( () => {
-        console.log('ERROR')
-      })
+     
     };
 
 
@@ -86,9 +84,7 @@ export default function useApplicationData() {
           appointments,
         });
       })
-      .catch( () => {
-        console.log('ERROR')
-      })
+      
     };
     
 
@@ -121,9 +117,7 @@ export default function useApplicationData() {
             days
           });
         })
-        .catch( () => {
-          setState({...prev})
-        })
+        
     } 
 
     return {
